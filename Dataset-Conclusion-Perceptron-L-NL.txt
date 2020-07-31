@@ -1,0 +1,43 @@
+Non-Linear Dataset regarding food choice
+---------------------------------------------------
+
+Input 1: Is Spicy?
+Input 2: Has Cheese?
+Input 3: Has Garlic?
+Input 4: Is served Hot?
+
+x1  x2  x3  x4    y
+0    0    0    0     1
+0    0    0    1     0
+0    0    1    0     0
+0    0    1    1     1
+0    1    0    0     1
+0    1    0    1     1
+0    1    1    0     0
+0    1    1    1     1
+1    0    0    0     0
+1    0    0    1     0
+1    0    1    0     0
+1    0    1    1     1
+1    1    0    0     0
+1    1    0    1     1
+1    1    1    0     0
+1    1    1    1     1
+
+Outputs
+----------
+
+0, 0, 0, 0
+Expected Output is 1 and Actual Output is  1
+1, 1, 1, 1
+Expected Output is 1 and Actual Output is  0
+1, 0, 0, 0
+Expected Output is 0 and Actual Output is  1
+0, 1, 0, 1
+Expected Output is 1 and Actual Output is  1
+
+Conclusion
+---------------
+Our dataset is non-linear. 
+It is said that single Perceptron cannot deal with non-linear data i.e. "Perceptron is linear classifier"
+So it will never be able to get to the state with all input vectors classified correctly as dataset is non-linear. 
