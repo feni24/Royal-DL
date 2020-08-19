@@ -25,7 +25,7 @@ def grad_w(w,b,x,y):
 def do_gradient_descent():
     startT = time.time()
     nume = 0
-    w, b, eta, max_epochs = 50, 50, 50, 1000
+    w, b, eta, max_epochs = 2,2,5,100
     for i in range(max_epochs):
         nume += 1
         dw, db = 0, 0
@@ -36,36 +36,88 @@ def do_gradient_descent():
         b = b - eta *db
     endT = time.time()
     print("Vanilla Gradient Descent")
-    print("Value of w: ",w)
-    print("Value of b: ",b)
+    #print("Value of w: ",w)
+    #print("Value of b: ",b)
     print("Error: ",error(w,b))
-    print("Epochs required: ",nume)
-    print("Execution Time: ",endT - startT)
+    #print("Epochs required: ",nume)
+    #print("Execution Time: ",endT - startT)
     
 def do_momentum_grad():
     startT = time.time()
     nume = 0
-    w,b,eta,max_epochs = 50, 50, 50, 1000
-    gama = 0.1
-    w_pre,b_pre = 0,0
-    for i in range(max_epochs):
+    w, b, eta, max_epochs = 2,2,5,100
+    prev_v_w,prev_v_b,gamma=0,0,0.9
+    for i in range(max_epochs): 
         nume += 1
-        dw,db = 0,0
-        for (x,y) in zip(X,Y):
-            dw += grad_w(w,b,x,y)
-            db += grad_b(w,b,x,y)
-        w = w - ((gama * w_pre) +(eta * dw))
-        b = b - ((gama * b_pre) +(eta * db))
-        w_pre = w
-        b_pre = b
+        dw,db=0,0
+        for x,y in zip(X, Y):
+            dw += grad_w(w, b, x, y)
+            db += grad_b(w, b, x, y)
+     
+        v_w=gamma*prev_v_w+eta*dw
+        v_b=gamma*prev_v_b+eta*db
+        w=w-v_w
+        b=b-v_b
+        prev_v_w=v_w
+        prev_v_b= v_b
     endT = time.time()
     print("\n\nMomentum based Gradient Descent")
-    print("Value of w: ",w)
-    print("Value of b: ",b)
+    #print("Value of w: ",w)
+    #print("Value of b: ",b)
     print("Error: ",error(w,b))
-    print("Epochs required: ",nume)
-    print("Execution Time: ",endT - startT)
+    #print("Epochs required: ",nume)
+    #print("Execution Time: ",endT - startT)
     
+
+def do_nesterov_accelerated_gradient_descent():
+    
+    w, b, eta, max_epochs = 2,2,5,100
+    prev_v_w,prev_v_b,gamma=0,0,0.9
+    
+    for i in range(max_epochs):
+        dw,db=0,0
+        
+        v_w=gamma*prev_v_w
+        v_b=gamma* prev_v_b
+        
+        for x,y in zip(X, Y):
+            dw += grad_w(w - v_w, b - v_b, x, y)
+            db += grad_b(w - v_w, b - v_b, x, y)
+        
+        v_w = gamma * prev_v_w + eta * dw
+        v_b = gamma * prev_v_b + eta * db
+        w = w - v_w
+        b = b - v_b
+        prev_v_w = v_w
+        prev_v_b = v_b
+    print("\nNesterov Error:", error(w,b))
+
 do_gradient_descent()
 do_momentum_grad()
+do_nesterov_accelerated_gradient_descent()
         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
